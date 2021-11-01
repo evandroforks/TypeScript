@@ -23,7 +23,7 @@ class CompletionEventListener:
         info.prev_sel = regions_to_static_regions(view.sel())
 
     def on_text_command_with_info(self, view, command_name, args, info):
-        if command_name in ["commit_completion", "insert_best_completion"]:
+        if command_name in ["commit_completion", "insert"]:
             # for finished completion, remember current cursor and set
             # a region that will be moved by the inserted text
             info.completion_sel = copy_regions(view.sel())
@@ -50,7 +50,7 @@ class CompletionEventListener:
             # handle insertion of string from completion menu, so that
             # it is fast to type completedName1.completedName2 (avoid a lag
             # when completedName1 is committed)
-            if command_name in ["commit_completion", "insert_best_completion"] and \
+            if command_name in ["commit_completion", "insert"] and \
                     len(view.sel()) == 1 and \
                     not info.client_info.pending_changes:
                 # get saved region that was pushed forward by insertion of
